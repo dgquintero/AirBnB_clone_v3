@@ -17,7 +17,8 @@ def get_amenities():
     return jsonify(amenity_list)
 
 
-@app_views.route('/amenities/<amenity_id>', methods=['GET'], strict_slashes=False)
+@app_views.route('/amenities/<amenity_id>', methods=['GET'],
+                 strict_slashes=False)
 def get_amenity(amenity_id):
     """Returns the amenity requested
 
@@ -64,7 +65,8 @@ def create_amenity():
     return jsonify(amenity.to_dict()), 201
 
 
-@app_views.route('/amenities/<amenity_id>', methods=['PUT'], strict_slashes=False)
+@app_views.route('/amenities/<amenity_id>', methods=['PUT'],
+                 strict_slashes=False)
 def update_amenity(amenity_id):
     """Updates an amenity
 
