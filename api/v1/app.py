@@ -15,8 +15,8 @@ def teardown_storage(exception):
     storage.close()
 
 
-@app.errorhandler(404) 
-def invalid_route(e): 
+@app.errorhandler(404)
+def invalid_route(e):
     return make_response(jsonify({"error": "Not found"}), 404)
 
 if __name__ == "__main__":
