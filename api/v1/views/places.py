@@ -77,7 +77,7 @@ def create_place(city_id):
     except KeyError:
         return make_response("Missing name", 400)
 
-    place = Place(name=place_name, user_id=place_user_id)
+    place = Place(name=place_name, user_id=place_user_id, city_id=city_id)
     storage.new(place)
     storage.save()
     return jsonify(place.to_dict()), 201
