@@ -5,11 +5,11 @@ from flask import jsonify, abort, request, make_response
 from models.state import State
 from models import storage
 
-states = list(storage.all(State).values())
 
 @app_views.route('/states', methods=['GET'], strict_slashes=False)
 def get_states():
     """Returns a list of all the states"""
+    states = list(storage.all(State).values())
     state_list = []
     for state in states:
         state_dict = state.to_dict()
@@ -22,6 +22,7 @@ def get_state(state_id):
     """Returns the state requested
 
     state_id: id of the state to get"""
+    states = list(storage.all(State).values())
     for state in states:
         if state.id == state_id:
             return jsonify(state.to_dict())
@@ -34,6 +35,7 @@ def delete_state(state_id):
     """Deletes a state
 
     state_id: id of the state to delete"""
+    states = list(storage.all(State).values())
     state = None
     for item in states:
         if item.id == state_id:
@@ -42,13 +44,13 @@ def delete_state(state_id):
         abort(404)
     storage.delete(state)
     storage.save()
-    storage.reload()
     return jsonify({}), 200
 
 
 @app_views.route('/states', methods=['POST'], strict_slashes=False)
 def create_state():
     """Creates a new state"""
+    states = list(storage.all(State).values())
     state_dict = request.get_json(silent=True)
     if state_dict is None:
         return make_response("Not a JSON", 400)
@@ -59,7 +61,6 @@ def create_state():
     state = State(name=state_name)
     storage.new(state)
     storage.save()
-    storage.reload()
     return jsonify(state.to_dict()), 201
 
 
@@ -68,6 +69,7 @@ def update_state(state_id):
     """Updates a state
 
     state_id: id of the state to update"""
+    states = list(storage.all(State).values())
     state_dict = request.get_json(silent=True)
     if state_dict is None:
         return make_response("Not a JSON", 400)
@@ -77,6 +79,5 @@ def update_state(state_id):
                 if k != 'id' and k != 'created_at' and k != 'updated_at':
                     setattr(state, k, v)
             storage.save()
-            storage.reload()
             return jsonify(state.to_dict()), 200
     abort(404)
