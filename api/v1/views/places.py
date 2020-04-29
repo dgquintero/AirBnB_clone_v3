@@ -96,8 +96,8 @@ def update_place(place_id):
     for place in places:
         if place.id == place_id:
             for k, v in place_dict.items():
-                if k != 'id' and k != 'created_at' and k != 'updated_at' and
-                k != 'user_id' and k != 'city_id':
+                if k != 'id' and k != 'created_at' and k != 'updated_at'\
+                        and k != 'user_id' and k != 'city_id':
                     setattr(place, k, v)
             storage.save()
             return jsonify(place.to_dict()), 200
